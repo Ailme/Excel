@@ -1,0 +1,16 @@
+{
+  "name": "ailme/excel",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alexandr Tumaykin",
+      "email": "alexandrtumaykin@gmail.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "version": "1.0.0",
+  "type": "library",
+  "require": {
+    "php": ">=5.5.0"
+  }
+}
