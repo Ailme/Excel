@@ -11,7 +11,8 @@
   "version": "1.0.0",
   "type": "library",
   "require": {
-    "php": ">=5.5.0"
+    "php": ">=5.5.0",
+    "phpoffice/phpexcel": "*"
   },
   "autoload": {
     "psr-4": {
