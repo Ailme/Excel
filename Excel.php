@@ -88,6 +88,28 @@ class Excel
     protected $_filename;
 
     /**
+     * используется для экспорта в excel
+     *
+     * @param array  $headers
+     *
+     * @param string $a
+     *
+     * @return array
+     */
+    public function letterCells( array $headers = [ ], $a = 'A' )
+    {
+        $result = [ ];
+
+        foreach ( $headers as $i => $header ) {
+            //        $result[num2alpha($i)] = $header;
+            $result[ $a ] = $header;
+            $a++;
+        }
+
+        return $result;
+    }
+
+    /**
      * @param string   $title
      * @param \Closure $callback
      *
@@ -150,7 +172,7 @@ class Excel
      */
     public function setHeaders( array $headers, $columnWidth = [ ] )
     {
-        $this->_headers = letterCells( $headers );
+        $this->_headers = $this->letterCells( $headers );
         $this->_cells   = array_keys( $this->_headers );
 
         foreach ( $this->_headers as $cell => $value ) {
@@ -162,7 +184,7 @@ class Excel
 
         //устанавливаем ширину
         if ( sizeof( $columnWidth ) ) {
-            foreach ( letterCells( $columnWidth ) as $cell => $width ) {
+            foreach ( $this->letterCells( $columnWidth ) as $cell => $width ) {
                 $this->_sheet->getColumnDimension( $cell )->setWidth( $width );
             }
         }
