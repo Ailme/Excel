@@ -142,6 +142,20 @@ class Excel
     }
 
     /**
+     * download file
+     */
+    public function saveMacros( $title = NULL )
+    {
+        $this->_title = $title ?: $this->_title;
+
+        header( 'Content-Type: application/vnd.ms-excel' );
+        header( 'Content-Disposition: attachment;filename="' . $this->_title . '.xlsm"' );
+        header( 'Cache-Control: max-age=0' );
+        $this->_writer->save( 'php://output' );
+        die();
+    }
+
+    /**
      * @param string   $title
      * @param \Closure $callback
      *
@@ -273,7 +287,8 @@ class Excel
         $this->_reader   = \PHPExcel_IOFactory::createReaderForFile( $this->_filename );
 
         if ( $callback instanceof \Closure ) {
-            $this->_excel = $this->_reader->setReadDataOnly( $this->_readDataOnly )->load( $this->_filename );
+            $this->_excel  = $this->_reader->setReadDataOnly( $this->_readDataOnly )->load( $this->_filename );
+            $this->_writer = \PHPExcel_IOFactory::createWriter( $this->_excel, 'Excel2007' );
             call_user_func( $callback, $this->_excel );
         }
 
@@ -396,5 +411,16 @@ class Excel
     public function getFilename()
     {
         return $this->_filename;
+    }
+
+    /**
+     * @param $title
+     *
+     * @return $this
+     */
+    public function setTitle( $title )
+    {
+        $this->_title = $title;
+        return $this;
     }
 }
